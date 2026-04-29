@@ -149,6 +149,11 @@ p { margin: 0 0 1em; }
   border-bottom: 1px solid #1f1d1d;
   z-index: 90;
   height: var(--header-h);
+  transition: box-shadow .25s var(--ease), border-color .25s var(--ease);
+}
+.site-header.is-scrolled {
+  box-shadow: 0 6px 24px rgba(0,0,0,0.55);
+  border-bottom-color: #2a2828;
 }
 .nav-row {
   display: flex;
@@ -181,7 +186,9 @@ p { margin: 0 0 1em; }
   transition: transform .25s var(--ease);
 }
 .primary-nav a:hover { color: var(--white); }
-.primary-nav a:hover::after { transform: scaleX(1); }
+.primary-nav a:hover::after,
+.primary-nav a.is-active::after { transform: scaleX(1); }
+.primary-nav a.is-active { color: var(--white); }
 
 .nav-toggle {
   display: none;
@@ -197,8 +204,12 @@ p { margin: 0 0 1em; }
   width: 26px;
   height: 2px;
   background: var(--white);
+  transform-origin: center;
   transition: transform .25s var(--ease), opacity .2s var(--ease);
 }
+.nav-toggle.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle.is-open span:nth-child(2) { opacity: 0; }
+.nav-toggle.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
 @media (max-width: 900px) {
   .primary-nav { display: none; }
@@ -564,23 +575,20 @@ body.menu-open { overflow: hidden; }
   color: var(--grey-dark);
   padding: 16px;
 }
-.gallery-item.placeholder { background: #161414; border: 1px dashed #3a3838; }
+.gallery-item.placeholder { background: #161414; border: 1px dashed #3a3838; cursor: default; }
 .gallery-item.placeholder .gi-fallback { display: flex; }
-.gallery-item.placeholder::before { display: none; }
-.gallery-item.placeholder::before {
+.gallery-item.placeholder::before,
+.gallery-item.placeholder::after { content: none; }
+.gallery-item.placeholder .gi-fallback::before {
   content: "DROP IMAGE";
   position: absolute;
   top: 14px;
   left: 14px;
-  inset: auto auto auto 14px;
-  background: transparent;
   font-family: var(--font-head);
   font-weight: 700;
   color: var(--red);
   font-size: 11px;
   letter-spacing: 0.2em;
-  width: auto;
-  height: auto;
 }
 
 /* ---------- contact ---------- */
