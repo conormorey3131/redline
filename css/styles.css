@@ -788,9 +788,10 @@ body.menu-open { overflow: hidden; }
   justify-content: center;
   padding: 24px;
   opacity: 0;
+  pointer-events: none;
   transition: opacity .2s var(--ease);
 }
-.lightbox[aria-hidden="false"] { opacity: 1; }
+.lightbox[aria-hidden="false"] { opacity: 1; pointer-events: auto; }
 .lightbox figure {
   margin: 0;
   max-width: 1200px;
