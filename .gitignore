@@ -1,0 +1,15 @@
+# Brand source pack (large — Illustrator, EPS, full font sets, brand PDFs)
+# Not needed on the live site. Keep it locally / in Dropbox instead.
+assests/
+
+# Claude Code local state
+.claude/
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*~
+.idea/
+.vscode/

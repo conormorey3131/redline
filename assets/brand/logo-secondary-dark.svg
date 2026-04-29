@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 320" role="img" aria-label="Redline">
+  <title>Redline</title>
+  <g>
+    <rect x="14" y="20" width="14" height="280" fill="#FF2242"/>
+    <rect x="38" y="20" width="14" height="280" fill="#FF2242"/>
+    <rect x="62" y="20" width="14" height="280" fill="#FF2242"/>
+  </g>
+  <g fill="#FFFFFF" font-family="'Archivo Narrow','Arial Narrow',Impact,sans-serif" font-weight="700" font-size="36" letter-spacing="2">
+    <text x="92" y="56">R</text>
+    <text x="92" y="96">E</text>
+    <text x="92" y="136">D</text>
+    <text x="92" y="176">L</text>
+    <text x="92" y="216">I</text>
+    <text x="92" y="256">N</text>
+    <text x="92" y="296">E</text>
+  </g>
+</svg>
