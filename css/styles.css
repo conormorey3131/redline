@@ -299,23 +299,39 @@ body.menu-open { overflow: hidden; }
   z-index: 1;
   background: rgba(17,16,16,0.55);
 }
-/* Brand 3-bar accent — visible regardless of hero image presence */
+/* Brand 3-bar accent — straight bars with a distressed/grunge edge to echo the logo */
 .hero-overlay::after {
   content: "";
   position: absolute;
-  right: -120px;
+  right: -80px;
   top: 18%;
   width: 320px;
-  height: 18px;
-  background: var(--red);
-  transform: skewX(-18deg);
-  opacity: 0.85;
-  box-shadow: 0 30px 0 var(--red), 0 60px 0 var(--red);
+  height: 78px;
+  opacity: 0.9;
+  background:
+    linear-gradient(to bottom,
+      var(--red) 0 18px,
+      transparent 18px 30px,
+      var(--red) 30px 48px,
+      transparent 48px 60px,
+      var(--red) 60px 78px);
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 78' preserveAspectRatio='none'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9 0.55' numOctaves='2' seed='4' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  1 0 0 0 -0.18'/></filter><rect width='320' height='78' filter='url(%23n)'/></svg>");
+          mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 78' preserveAspectRatio='none'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9 0.55' numOctaves='2' seed='4' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  1 0 0 0 -0.18'/></filter><rect width='320' height='78' filter='url(%23n)'/></svg>");
+  -webkit-mask-size: 100% 100%;
+          mask-size: 100% 100%;
 }
 @media (max-width: 700px) {
   .hero-overlay::after {
-    width: 200px; right: -80px; height: 12px;
-    box-shadow: 0 22px 0 var(--red), 0 44px 0 var(--red);
+    width: 220px;
+    right: -50px;
+    height: 52px;
+    background:
+      linear-gradient(to bottom,
+        var(--red) 0 12px,
+        transparent 12px 20px,
+        var(--red) 20px 32px,
+        transparent 32px 40px,
+        var(--red) 40px 52px);
   }
 }
 
@@ -589,6 +605,79 @@ body.menu-open { overflow: hidden; }
   color: var(--red);
   font-size: 11px;
   letter-spacing: 0.2em;
+}
+
+/* ---------- mailing list ---------- */
+.mailing {
+  padding: var(--pad-y) 0;
+  background: var(--black-2);
+  border-top: 1px solid #1f1d1d;
+  border-bottom: 1px solid #1f1d1d;
+}
+.mailing-inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  align-items: center;
+}
+@media (min-width: 900px) {
+  .mailing-inner { grid-template-columns: 1fr 1fr; gap: 64px; }
+}
+.mailing-copy h2 {
+  font-family: var(--font-head);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: clamp(28px, 3.6vw, 40px);
+  letter-spacing: 0.03em;
+  margin: 0 0 16px;
+}
+.mailing-copy p {
+  color: var(--grey-light);
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 18px 0 0;
+  max-width: 480px;
+}
+.mailing-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+@media (min-width: 600px) {
+  .mailing-form { flex-direction: row; align-items: stretch; flex-wrap: wrap; }
+}
+.mailing-form input[type="email"] {
+  flex: 1 1 240px;
+  font: inherit;
+  background: var(--black);
+  color: var(--white);
+  border: 1px solid var(--white);
+  padding: 14px;
+  border-radius: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  transition: border-color .2s var(--ease);
+}
+.mailing-form input[type="email"]::placeholder { color: var(--grey-light); opacity: 0.7; }
+.mailing-form input[type="email"]:focus {
+  border-color: var(--red);
+  border-width: 2px;
+  padding: 13px;
+  outline: none;
+}
+.mailing-form .btn { flex: 0 0 auto; }
+.mailing-status { flex: 1 0 100%; margin: 0; }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* ---------- contact ---------- */

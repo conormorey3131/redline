@@ -217,4 +217,31 @@
       }
     });
   }
+
+  /* ---------- mailing list form ---------- */
+  // TODO: Wire to a real list provider (Mailchimp, Buttondown, Formspree) before launch.
+  // Replace action="/subscribe" on .mailing-form with the provider's endpoint and the
+  // early-return below will be bypassed.
+  var mailingForm = document.querySelector('.mailing-form');
+  if (mailingForm) {
+    var mailingStatus = mailingForm.querySelector('.form-status');
+    function showMailingStatus(message, type) {
+      if (!mailingStatus) return;
+      mailingStatus.hidden = false;
+      mailingStatus.className = 'form-status mailing-status is-' + type;
+      mailingStatus.textContent = message;
+    }
+    mailingForm.addEventListener('submit', function (e) {
+      var action = mailingForm.getAttribute('action') || '';
+      if (action === '/subscribe' || action === '') {
+        e.preventDefault();
+        if (!mailingForm.checkValidity()) {
+          showMailingStatus('Please enter a valid email address.', 'error');
+          return;
+        }
+        showMailingStatus("Thanks — you're on the list.", 'ok');
+        mailingForm.reset();
+      }
+    });
+  }
 })();
