@@ -186,62 +186,94 @@
     });
   }
 
-  /* ---------- contact form ---------- */
-  // TODO: Wire this form to a real endpoint before going live.
-  // Easiest option: sign up at https://formspree.io, get your form endpoint
-  // (e.g. https://formspree.io/f/abc123), and in index.html replace
-  // `action="/contact"` on the .contact-form with your Formspree URL.
-  // Once the action is no longer "/contact", the browser will submit normally
-  // and the early-return below is bypassed.
-  // Alternatives: Netlify Forms (add `netlify` attribute to the <form>) or
-  // any backend endpoint that accepts application/x-www-form-urlencoded.
-  var form = document.querySelector('.contact-form');
-  if (form) {
+  /* ---------- forms (Web3Forms) ---------- */
+  //
+  // ====================================================================
+  //  PASTE YOUR WEB3FORMS ACCESS KEY BELOW (this is the only thing to set)
+  //  Get it free at https://web3forms.com — enter cian@redlineevents.ie,
+  //  and they email you an access key (a UUID). Submissions from BOTH the
+  //  contact form and the mailing-list form then land in that inbox.
+  // ====================================================================
+  var WEB3FORMS_ACCESS_KEY = 'YOUR_ACCESS_KEY_HERE';
+
+  function wireForm(selector, opts) {
+    var form = document.querySelector(selector);
+    if (!form) return;
     var status = form.querySelector('.form-status');
+
+    // Inject the access key once so it only needs setting in one place.
+    if (!form.querySelector('input[name="access_key"]')) {
+      var keyInput = document.createElement('input');
+      keyInput.type = 'hidden';
+      keyInput.name = 'access_key';
+      keyInput.value = WEB3FORMS_ACCESS_KEY;
+      form.appendChild(keyInput);
+    }
+
     function showStatus(message, type) {
       if (!status) return;
       status.hidden = false;
-      status.className = 'form-status is-' + type;
+      status.className = opts.statusClass + ' is-' + type;
       status.textContent = message;
     }
+
     form.addEventListener('submit', function (e) {
-      var action = form.getAttribute('action') || '';
-      if (action === '/contact' || action === '') {
-        e.preventDefault();
-        if (!form.checkValidity()) {
-          showStatus('Please fill in all required fields.', 'error');
-          return;
-        }
-        showStatus("Thanks — we'll be in touch within one working day.", 'ok');
-        form.reset();
+      e.preventDefault();
+
+      if (!form.checkValidity()) {
+        showStatus(opts.invalidMsg, 'error');
+        form.reportValidity();
+        return;
       }
+
+      if (!WEB3FORMS_ACCESS_KEY || WEB3FORMS_ACCESS_KEY === 'YOUR_ACCESS_KEY_HERE') {
+        showStatus('Form is not configured yet. Please email cian@redlineevents.ie directly.', 'error');
+        return;
+      }
+
+      var btn = form.querySelector('button[type="submit"]');
+      var btnLabel = btn ? btn.textContent : '';
+      if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+      showStatus('Sending…', 'pending');
+
+      fetch(form.action, {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: new FormData(form)
+      })
+        .then(function (res) {
+          return res.json().then(function (data) {
+            return { ok: res.ok, data: data };
+          });
+        })
+        .then(function (r) {
+          if (r.ok && r.data && r.data.success) {
+            showStatus(opts.successMsg, 'ok');
+            form.reset();
+          } else {
+            showStatus(opts.errorMsg, 'error');
+          }
+        })
+        .catch(function () {
+          showStatus(opts.errorMsg, 'error');
+        })
+        .then(function () {
+          if (btn) { btn.disabled = false; btn.textContent = btnLabel; }
+        });
     });
   }
 
-  /* ---------- mailing list form ---------- */
-  // TODO: Wire to a real list provider (Mailchimp, Buttondown, Formspree) before launch.
-  // Replace action="/subscribe" on .mailing-form with the provider's endpoint and the
-  // early-return below will be bypassed.
-  var mailingForm = document.querySelector('.mailing-form');
-  if (mailingForm) {
-    var mailingStatus = mailingForm.querySelector('.form-status');
-    function showMailingStatus(message, type) {
-      if (!mailingStatus) return;
-      mailingStatus.hidden = false;
-      mailingStatus.className = 'form-status mailing-status is-' + type;
-      mailingStatus.textContent = message;
-    }
-    mailingForm.addEventListener('submit', function (e) {
-      var action = mailingForm.getAttribute('action') || '';
-      if (action === '/subscribe' || action === '') {
-        e.preventDefault();
-        if (!mailingForm.checkValidity()) {
-          showMailingStatus('Please enter a valid email address.', 'error');
-          return;
-        }
-        showMailingStatus("Thanks — you're on the list.", 'ok');
-        mailingForm.reset();
-      }
-    });
-  }
+  wireForm('.contact-form', {
+    statusClass: 'form-status',
+    invalidMsg: 'Please fill in all required fields.',
+    successMsg: "Thanks — we'll be in touch within one working day.",
+    errorMsg: 'Sorry, something went wrong. Please email cian@redlineevents.ie directly.'
+  });
+
+  wireForm('.mailing-form', {
+    statusClass: 'form-status mailing-status',
+    invalidMsg: 'Please enter a valid email address.',
+    successMsg: "Thanks — you're on the list.",
+    errorMsg: 'Sorry, something went wrong. Please try again later.'
+  });
 })();

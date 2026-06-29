@@ -43,7 +43,7 @@
   "url": "https://redlineevents.ie/",
   "image": "https://redlineevents.ie/assets/images/hero.jpg",
   "telephone": "+353863556077",
-  "email": "info@redlineevents.ie",
+  "email": "cian@redlineevents.ie",
   "address": {
     "@type": "PostalAddress",
     "addressLocality": "Killarney",
@@ -203,7 +203,11 @@
       <span class="rule"></span>
       <p>Be first to hear about upcoming events, entry releases and behind-the-scenes from Redline.</p>
     </div>
-    <form class="mailing-form" action="/subscribe" method="POST" novalidate>
+    <form class="mailing-form" action="https://api.web3forms.com/submit" method="POST" novalidate>
+      <input type="hidden" name="subject" value="New mailing list sign-up — Redline Events">
+      <input type="hidden" name="from_name" value="Redline Events Website">
+      <!-- Honeypot spam filter (hidden from users) -->
+      <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
       <label class="visually-hidden" for="f-mailing-email">Email address</label>
       <input id="f-mailing-email" name="email" type="email" required autocomplete="email" placeholder="you@example.com">
       <button type="submit" class="btn btn-primary">Sign Up</button>
@@ -226,7 +230,7 @@
         </li>
         <li>
           <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><rect x="3" y="5" width="18" height="14" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M3 6l9 7 9-7" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>
-          <a href="mailto:info@redlineevents.ie">info@redlineevents.ie</a>
+          <a href="mailto:cian@redlineevents.ie">cian@redlineevents.ie</a>
         </li>
         <li>
           <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M5 4h4l2 5-3 2a12 12 0 006 6l2-3 5 2v4a2 2 0 01-2 2A17 17 0 013 6a2 2 0 012-2z" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>
@@ -235,7 +239,11 @@
       </ul>
     </div>
 
-    <form class="contact-form reveal" action="/contact" method="POST" novalidate>
+    <form class="contact-form reveal" action="https://api.web3forms.com/submit" method="POST" novalidate>
+      <input type="hidden" name="subject" value="New contact form enquiry — Redline Events">
+      <input type="hidden" name="from_name" value="Redline Events Website">
+      <!-- Honeypot spam filter (hidden from users) -->
+      <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
       <div class="field">
         <label for="f-name">Full Name</label>
         <input id="f-name" name="name" type="text" required autocomplete="name" placeholder="Your full name">

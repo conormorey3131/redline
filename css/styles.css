@@ -788,6 +788,7 @@ body.menu-open { overflow: hidden; }
 }
 .form-status.is-error { color: var(--red); }
 .form-status.is-ok { color: var(--green); }
+.form-status.is-pending { color: var(--muted, currentColor); opacity: .85; }
 
 /* ---------- footer ---------- */
 .site-footer {

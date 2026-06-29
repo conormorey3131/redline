@@ -67,7 +67,7 @@ The form currently posts to a placeholder `/contact` endpoint. JS intercepts tha
    ```html
    <form class="contact-form reveal" action="/contact" method="POST" novalidate>
    ```
-   Replace `action="/contact"` with `action="https://formspree.io/f/abc123"`. That's the only change — submissions will land in your Formspree inbox and forward to the email registered on the account (`info@redlineevents.ie`).
+   Replace `action="/contact"` with `action="https://formspree.io/f/abc123"`. That's the only change — submissions will land in your Formspree inbox and forward to the email registered on the account (`cian@redlineevents.ie`).
 
 **Alternative options:**
 - **Netlify Forms** — add `netlify` to the `<form>` tag and a hidden honeypot field. Auto-detected on first deploy.
