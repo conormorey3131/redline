@@ -194,7 +194,7 @@
   //  and they email you an access key (a UUID). Submissions from BOTH the
   //  contact form then lands in that inbox.
   // ====================================================================
-  var WEB3FORMS_ACCESS_KEY = 'YOUR_ACCESS_KEY_HERE';
+  var WEB3FORMS_ACCESS_KEY = '9a171388-73d1-47c0-9ca3-53ba08fcdbf5';
 
   function wireForm(selector, opts) {
     var form = document.querySelector(selector);
