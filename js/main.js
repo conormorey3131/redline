@@ -192,7 +192,7 @@
   //  PASTE YOUR WEB3FORMS ACCESS KEY BELOW (this is the only thing to set)
   //  Get it free at https://web3forms.com — enter cian@redlineevents.ie,
   //  and they email you an access key (a UUID). Submissions from BOTH the
-  //  contact form and the mailing-list form then land in that inbox.
+  //  contact form then lands in that inbox.
   // ====================================================================
   var WEB3FORMS_ACCESS_KEY = 'YOUR_ACCESS_KEY_HERE';
 
@@ -268,12 +268,5 @@
     invalidMsg: 'Please fill in all required fields.',
     successMsg: "Thanks — we'll be in touch within one working day.",
     errorMsg: 'Sorry, something went wrong. Please email cian@redlineevents.ie directly.'
-  });
-
-  wireForm('.mailing-form', {
-    statusClass: 'form-status mailing-status',
-    invalidMsg: 'Please enter a valid email address.',
-    successMsg: "Thanks — you're on the list.",
-    errorMsg: 'Sorry, something went wrong. Please try again later.'
   });
 })();
