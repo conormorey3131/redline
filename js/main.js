@@ -186,29 +186,20 @@
     });
   }
 
-  /* ---------- forms (Web3Forms) ---------- */
+  /* ---------- forms (FormSubmit) ---------- */
   //
   // ====================================================================
-  //  PASTE YOUR WEB3FORMS ACCESS KEY BELOW (this is the only thing to set)
-  //  Get it free at https://web3forms.com — enter cian@redlineevents.ie,
-  //  and they email you an access key (a UUID). Submissions from BOTH the
-  //  contact form then lands in that inbox.
+  //  The destination inbox is the address in the form's action attribute
+  //  in index.html — there is no key or account behind it. A new address
+  //  must confirm itself once, via a link FormSubmit emails on the first
+  //  submission, before anything is delivered. Add further recipients
+  //  with a _cc field. Verify with a live test after any change.
   // ====================================================================
-  var WEB3FORMS_ACCESS_KEY = '9a171388-73d1-47c0-9ca3-53ba08fcdbf5';
 
   function wireForm(selector, opts) {
     var form = document.querySelector(selector);
     if (!form) return;
     var status = form.querySelector('.form-status');
-
-    // Inject the access key once so it only needs setting in one place.
-    if (!form.querySelector('input[name="access_key"]')) {
-      var keyInput = document.createElement('input');
-      keyInput.type = 'hidden';
-      keyInput.name = 'access_key';
-      keyInput.value = WEB3FORMS_ACCESS_KEY;
-      form.appendChild(keyInput);
-    }
 
     function showStatus(message, type) {
       if (!status) return;
@@ -226,20 +217,21 @@
         return;
       }
 
-      if (!WEB3FORMS_ACCESS_KEY || WEB3FORMS_ACCESS_KEY === 'YOUR_ACCESS_KEY_HERE') {
-        showStatus('Form is not configured yet. Please email cian@redlineevents.ie directly.', 'error');
-        return;
-      }
-
       var btn = form.querySelector('button[type="submit"]');
       var btnLabel = btn ? btn.textContent : '';
       if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
       showStatus('Sending…', 'pending');
 
+      var payload = {};
+      new FormData(form).forEach(function (value, key) { payload[key] = value; });
+
       fetch(form.action, {
         method: 'POST',
-        headers: { Accept: 'application/json' },
-        body: new FormData(form)
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
       })
         .then(function (res) {
           return res.json().then(function (data) {
@@ -247,7 +239,8 @@
           });
         })
         .then(function (r) {
-          if (r.ok && r.data && r.data.success) {
+          // FormSubmit reports success as the string "true", not a boolean.
+          if (r.ok && r.data && String(r.data.success) === 'true') {
             showStatus(opts.successMsg, 'ok');
             form.reset();
           } else {

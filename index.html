@@ -219,11 +219,12 @@
       </ul>
     </div>
 
-    <form class="contact-form reveal" action="https://api.web3forms.com/submit" method="POST" novalidate>
-      <input type="hidden" name="subject" value="New contact form enquiry — Redline Events">
-      <input type="hidden" name="from_name" value="Redline Events Website">
+    <form class="contact-form reveal" action="https://formsubmit.co/ajax/cian@redlineevents.ie" method="POST" novalidate>
+      <input type="hidden" name="_subject" value="New contact form enquiry — Redline Events">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_captcha" value="false">
       <!-- Honeypot spam filter (hidden from users) -->
-      <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
       <div class="field">
         <label for="f-name">Full Name</label>
         <input id="f-name" name="name" type="text" required autocomplete="name" placeholder="Your full name">
